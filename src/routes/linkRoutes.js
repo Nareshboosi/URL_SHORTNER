@@ -1,9 +1,8 @@
 const express = require("express");
-const { createShortLink, redirectToOriginal } = require("../controllers/linkController.js");
-
 const router = express.Router();
+const { shortenURL, redirectURL } = require("../controllers/linkController.js");
 
-router.post("/shorten", createShortLink);
-router.get("/:code", redirectToOriginal);
+router.post("/shorten", shortenURL);
+router.get("/:code", redirectURL);
 
 module.exports = router;

@@ -1,20 +1,17 @@
-const api = "http://localhost:5000/api";
-
-async function shortenUrl() {
+document.getElementById("shortenBtn").addEventListener("click", async () => {
     const longUrl = document.getElementById("urlInput").value;
-    const status = document.getElementById("status");
 
-    const response = await fetch(`${api}/shorten`, {
+    const res = await fetch("/shorten", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ longUrl })
     });
 
-    const data = await response.json();
+    const data = await res.json();
 
-    if (data.shortUrl) {
-        status.innerHTML = `<span style="color:green;">Short URL: ${data.shortUrl}</span>`;
+    if (res.ok) {
+        document.getElementById("result").innerText = data.shortUrl;
     } else {
-        status.innerHTML = `<span style="color:red;">Error</span>`;
+        document.getElementById("result").innerText = data.error;
     }
-}
+});

@@ -73,33 +73,34 @@
         <div class="result" id="result"></div>
     </div>
 
-    <script>
-        async function sendRequest() {
-            const longUrl = document.getElementById("longUrl").value;
-            const resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = "Processing...";
+   <script>
+    async function sendRequest() {
+        const longUrl = document.getElementById("longUrl").value;
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = "Processing...";
 
-            try {
-                const response = await fetch("http://localhost:5000/shorten", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ url: longUrl }),
-                });
+        try {
+            const response = await fetch("http://localhost:5000/shorten", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ longUrl }),  // FIXED HERE
+            });
 
-                const data = await response.json();
+            const data = await response.json();
 
-                if (data.shortUrl) {
-                    resultDiv.innerHTML =
-                        `Short URL: <a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
-                } else {
-                    resultDiv.innerHTML = "Error generating short URL!";
-                }
-            } catch (error) {
-                resultDiv.innerHTML = "❌ Backend not connected!";
+            if (data.shortUrl) {
+                resultDiv.innerHTML =
+                    `Short URL: <a href="${data.shortUrl}" target="_blank">${data.shortUrl}</a>`;
+            } else {
+                resultDiv.innerHTML = "Error generating short URL!";
             }
+        } catch (error) {
+            resultDiv.innerHTML = "❌ Backend not connected!";
         }
-    </script>
+    }
+</script>
+
 </body>
 </html>
